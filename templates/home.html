@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block title %}Navify - Route Optimization{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="card">
+        <h1 style="color: var(--primary-color); margin-bottom: 2rem;">Route Optimization</h1>
+        
+        <form id="routeForm">
+            <div class="form-group">
+                <label for="source">Source Location</label>
+                <input type="text" id="source" class="form-control" placeholder="Enter source location" required>
+            </div>
+
+            <div id="destinations">
+                <div class="destinations-container">
+                    <div class="destination-form">
+                        <div class="form-group">
+                            <label>Destination 1</label>
+                            <input type="text" class="form-control" placeholder="Enter destination" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Priority</label>
+                            <select class="form-control">
+                                <option value="cost">Cost of Route</option>
+                                <option value="emissions">Carbon Emissions</option>
+                                <option value="time">Time Taken</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button type="button" id="addDestination" class="btn" style="margin-bottom: 2rem;">
+                <i data-lucide="plus"></i> Add Destination
+            </button>
+
+            <div class="vehicle-details">
+                <div class="form-group">
+                    <label>Vehicle Type</label>
+                    <select class="form-control">
+                        <option value="truck">Truck</option>
+                        <option value="van">Van</option>
+                        <option value="car">Car</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Fuel Type</label>
+                    <select class="form-control">
+                        <option value="diesel">Diesel</option>
+                        <option value="petrol">Petrol</option>
+                        <option value="electric">Electric</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Mileage (km/l)</label>
+                    <input type="number" class="form-control" placeholder="Enter mileage" required>
+                </div>
+            </div>
+
+            <button type="submit" class="btn">
+                <i data-lucide="search"></i> Generate Routes
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.getElementById('addDestination').addEventListener('click', function() {
+    const destinations = document.getElementById('destinations');
+    const count = destinations.children.length + 1;
+    
+    const container = document.createElement('div');
+    container.className = 'destinations-container';
+    container.innerHTML = `
+        <div class="destination-form">
+            <div class="form-group">
+                <label>Destination ${count}</label>
+                <input type="text" class="form-control" placeholder="Enter destination" required>
+            </div>
+            <div class="form-group">
+                <label>Priority</label>
+                <select class="form-control">
+                    <option value="cost">Cost of Route</option>
+                    <option value="emissions">Carbon Emissions</option>
+                    <option value="time">Time Taken</option>
+                </select>
+            </div>
+        </div>
+        <button type="button" class="remove-btn" onclick="this.parentElement.remove()">
+            <i data-lucide="minus"></i>
+        </button>
+    `;
+    
+    destinations.appendChild(container);
+    lucide.createIcons();
+});
+
+document.getElementById('routeForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    // Add route generation logic here
+    alert('Route generation functionality will be implemented here');
+});
+</script>
+{% endblock %}

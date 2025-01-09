@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+
+{% block title %}Navify - Driver Behavior{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="card">
+        <h1 style="color: var(--primary-color); margin-bottom: 2rem;">Driver Behavior Monitoring</h1>
+        
+        <div class="driver-list">
+            <!-- Driver cards will be populated here -->
+        </div>
+    </div>
+</div>
+
+<template id="driver-card-template">
+    <div class="driver-card">
+        <div class="driver-info">
+            <h3>Driver Name</h3>
+            <p>License: ABC123</p>
+            <p class="status">Status: On Duty</p>
+        </div>
+        <div class="driver-metrics">
+            <div class="metric">
+                <span>Speed</span>
+                <span class="value">65 km/h</span>
+            </div>
+            <div class="metric">
+                <span>Distance</span>
+                <span class="value">120 km</span>
+            </div>
+            <div class="metric">
+                <span>Time Active</span>
+                <span class="value">4h 30m</span>
+            </div>
+        </div>
+    </div>
+</template>
+
+<style>
+.driver-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+}
+
+.driver-card {
+    background: white;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.driver-info h3 {
+    color: var(--primary-color);
+    margin: 0 0 0.5rem 0;
+}
+
+.driver-info p {
+    margin: 0.25rem 0;
+    color: #666;
+}
+
+.status {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.driver-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #eee;
+}
+
+.metric {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.metric span {
+    color: #666;
+    font-size: 0.875rem;
+}
+
+.metric .value {
+    color: var(--primary-color);
+    font-weight: bold;
+    font-size: 1.125rem;
+    margin-top: 0.25rem;
+}
+</style>
+
+{% block scripts %}
+<script>
+// Simulated driver data
+const drivers = [
+    {
+        name: 'John Doe',
+        license: 'ABC123',
+        status: 'On Duty',
+        speed: 65,
+        distance: 120,
+        timeActive: '4h 30m'
+    },
+    {
+        name: 'Jane Smith',
+        license: 'XYZ789',
+        status: 'Off Duty',
+        speed: 0,
+        distance: 85,
+        timeActive: '2h 15m'
+    }
+];
+
+function createDriverCard(driver) {
+    const template = document.getElementById('driver-card-template');
+    const card = template.content.cloneNode(true);
+    
+    card.querySelector('h3').textContent = driver.name;
+    card.querySelector('p').textContent = `License: ${driver.license}`;
+    card.querySelector('.status').textContent = `Status: ${driver.status}`;
+    
+    const metrics = card.querySelectorAll('.value');
+    metrics[0].textContent = `${driver.speed} km/h`;
+    metrics[1].textContent = `${driver.distance} km`;
+    metrics[2].textContent = driver.timeActive;
+    
+    return card;
+}
+
+function initializeDriverList() {
+    const driverList = document.querySelector('.driver-list');
+    drivers.forEach(driver => {
+        driverList.appendChild(createDriverCard(driver));
+    });
+}
+
+// Initialize the driver list when the page loads
+document.addEventListener('DOMContentLoaded', initializeDriverList);
+</script>
+{% endblock %}
+{% endblock %}
