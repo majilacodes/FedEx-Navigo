@@ -3,7 +3,7 @@ import numpy as np
 import random
 
 # Initialize Google Maps client
-API_KEY = 'AIzaSyDMKa4KScFT5B0Qf7d25pRYV6DupU-Mm-Y'
+API_KEY = 'Enter Your API Key Here'
 gmaps = googlemaps.Client(key=API_KEY)
 
 # Function to get distances and times between locations
